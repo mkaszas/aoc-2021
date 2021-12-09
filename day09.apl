@@ -9,4 +9,21 @@ part1 ← {
 }
 
 
+
+step ← {
+    x ← 2 2⌷⍵
+    x≠0:x
+    ⌈/(2∘⌷,(2∘⌷⍉)) ⍵
+}
+
+part2 ← {
+    lowPointMap ← ↑((checkNeighbours⊢)⌺3 3)1+⍵
+    start ← ({9=⍵:¯1⋄0}¨ ⍵) + {((⍳≢⍸⍵)@(⍸⍵)) ⍵} lowPointMap
+    filled ← ((step⌺3 3)⍣≡) start
+
+    ×/3↑(⊂∘⍒⌷⊢)≢¨1↓{⍵⊂⍨1,2≠/⍵}(⊂∘⍋⌷⊢),filled
+}
+
+
 part1 data ⍝ 537
+part2 data ⍝ 1142757
