@@ -21,8 +21,7 @@ part1 ← {
 
 
 part2 ← {
-    toPoint ← {(opening ∊ ⍵)/(⍳4)}
-    closingScore ← {⊃{⍺+5×⍵}/ toPoint¨ clean ⍵}
+    closingScore ← {⊃{⍺+5×⍵}/ (⍸⍷∘opening)¨ clean ⍵}
 
     middle ⊃,/closingScore¨ ⍵
 }
