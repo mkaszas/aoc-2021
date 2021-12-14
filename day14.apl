@@ -1,15 +1,11 @@
 data ← ⊃⎕NGET '/Users/mate/sandbox/aoc-2021/input/14.txt' 1
 
-parseRules ← {{(⍵∊⎕a)⊆⍵}¨2↓⍵}
-findNext ← {⊃⌽⊃(⍸(⊂⍺)⍷⊃¨⍵)⌷⍵}
+letters ← ∪⊃,/pairs ← ⊃¨rules ← {(⍵∊⎕a)⊆⍵}¨2↓data
+nextFreq ← {((s e) m)←⍵⋄(s,⊃m) +⍥{(⊂⍵)⍷pairs} ((⊃m),e)}¨ rules
+letterScores ← {(⊃⌽⍵)⍷letters}¨pairs
+startingFreq ← ⊃+/{(⊂⍵)⍷pairs}¨2,/⊃data
 
-freq ← {1+≢¨(0,2=/s)⊆s←(⊂∘⍋⌷⊢)⍵}
+solve ← {(⌈/-⌊/) ((⊃⊃data)⍷letters)++⌿↑letterScores×({+⌿↑⍵×nextFreq}⍣⍵) startingFreq}
 
-part1 ← {
-    d ← ⍵
-    str ← ({(⊃⍵),⊃,/(2{((⍺ ⍵) findNext (parseRules d)),⍵}/⍵)}⍣10) d
-    (⌈/-⌊/) freq str
-}
-
-
-part1 data ⍝ 3247
+⎕ ← part1 ← solve 10 ⍝ 3247
+⎕ ← part2 ← solve 40 ⍝ 4110568157153
